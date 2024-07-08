@@ -3,9 +3,13 @@
 
 import { sql } from "drizzle-orm";
 import {
+  boolean,
+  date,
+  decimal,
   index,
   pgTableCreator,
   serial,
+  time,
   timestamp,
   varchar,
 } from "drizzle-orm/pg-core";
@@ -18,19 +22,25 @@ import {
  */
 export const createTable = pgTableCreator((name) => `contabl_${name}`);
 
-export const posts = createTable(
-  "post",
+export const incomes = createTable(
+  "income",
   {
     id: serial("id").primaryKey(),
-    name: varchar("name", { length: 256 }),
+    description: varchar("description", { length: 256 }),
+    amount: decimal("amount", { precision: 12, scale: 2 }),
+    date: timestamp("date", { withTimezone: true })
+      .default(sql`CURRENT_TIMESTAMP`)
+      .notNull(),
+    isRecurring: boolean("is_recurring"),
+    recurrenceDate: date("recurrence_date", { mode: "string" }),
     createdAt: timestamp("created_at", { withTimezone: true })
       .default(sql`CURRENT_TIMESTAMP`)
       .notNull(),
     updatedAt: timestamp("updated_at", { withTimezone: true }).$onUpdate(
-      () => new Date()
+      () => new Date(),
     ),
   },
   (example) => ({
-    nameIndex: index("name_idx").on(example.name),
-  })
+    nameIndex: index("name_idx").on(example.description),
+  }),
 );
