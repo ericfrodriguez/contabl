@@ -1,15 +1,14 @@
 // Example model schema from the Drizzle docs
 // https://orm.drizzle.team/docs/sql-schema-declaration
 
-import { sql } from "drizzle-orm";
 import {
   boolean,
   date,
   decimal,
   index,
+  pgEnum,
   pgTableCreator,
   serial,
-  time,
   timestamp,
   varchar,
 } from "drizzle-orm/pg-core";
@@ -22,20 +21,23 @@ import {
  */
 export const createTable = pgTableCreator((name) => `contabl_${name}`);
 
+export const currencyEnum = pgEnum("currency", ["USD", "ARS"]);
 export const incomes = createTable(
   "income",
   {
     id: serial("id").primaryKey(),
-    description: varchar("description", { length: 256 }),
-    amount: decimal("amount", { precision: 12, scale: 2 }),
-    date: timestamp("date", { withTimezone: true })
-      .default(sql`CURRENT_TIMESTAMP`)
-      .notNull(),
-    isRecurring: boolean("is_recurring"),
+    description: varchar("description", { length: 256 }).notNull(),
+    amount: decimal("amount", { precision: 12, scale: 2 }).notNull(),
+    currency: currencyEnum("currency").notNull().default("ARS"),
+    // arsAtDate: ,
+    // usdAtDate: ,
+    // state: "received" | "not received",
+    date: timestamp("date", { withTimezone: true }).defaultNow(), // TODO: Ver diferencia entre timezone base de datos y cliente
+    isRecurring: boolean("is_recurring").notNull().default(false),
     recurrenceDate: date("recurrence_date", { mode: "string" }),
     createdAt: timestamp("created_at", { withTimezone: true })
-      .default(sql`CURRENT_TIMESTAMP`)
-      .notNull(),
+      .notNull()
+      .defaultNow(),
     updatedAt: timestamp("updated_at", { withTimezone: true }).$onUpdate(
       () => new Date(),
     ),
