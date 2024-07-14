@@ -9,6 +9,7 @@ import {
   pgEnum,
   pgTableCreator,
   serial,
+  text,
   timestamp,
   varchar,
 } from "drizzle-orm/pg-core";
@@ -23,9 +24,10 @@ export const createTable = pgTableCreator((name) => `contabl_${name}`);
 
 export const currencyEnum = pgEnum("currency", ["USD", "ARS"]);
 export const incomes = createTable(
-  "income",
+  "incomes",
   {
     id: serial("id").primaryKey(),
+    userId: varchar("user_id", { length: 256 }).notNull(),
     description: varchar("description", { length: 256 }).notNull(),
     amount: decimal("amount", { precision: 12, scale: 2 }).notNull(),
     currency: currencyEnum("currency").notNull().default("ARS"),
@@ -46,3 +48,12 @@ export const incomes = createTable(
     nameIndex: index("name_idx").on(example.description),
   }),
 );
+
+export const users = createTable("users", {
+  id: serial("id").primaryKey(),
+  kindeId: text("kinde_id").notNull().unique(),
+  firstName: varchar("first_name", { length: 128 }).notNull(),
+  lastName: varchar("last_name", { length: 128 }).notNull(),
+  email: varchar("email", { length: 128 }).notNull(),
+  photo: text("photo"),
+});

@@ -14,20 +14,12 @@ import {
 import { db } from "@/server/db";
 import { IncomesClient } from './components/client';
 import type { IncomeRow } from "./components/columns";
+import { getAllIncomes } from "@/server/queries/incomes";
 
 export const dynamic = "force-dynamic";
 
 export default async function IncomesPage() {
-  const incomes: IncomeRow[] = await db.query.incomes.findMany({
-    columns: {
-      id: true,
-      description: true,
-      amount: true,
-      date: true,
-      recurrenceDate: true,
-      currency: true,
-    }
-  });
+  const incomes = getAllIncomes();
 
   return (
     <ContentLayout title="All Incomes">
