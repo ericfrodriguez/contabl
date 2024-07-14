@@ -25,9 +25,9 @@ export function SheetMenu() {
             variant="link"
             asChild
           >
-            <Link href="/dashboard" className="flex items-center gap-2">
+            <Link href="/" className="flex items-center gap-2">
               <PanelsTopLeft className="w-6 h-6 mr-1" />
-              <h1 className="font-bold text-lg">Brand</h1>
+              <h1 className="font-bold text-lg">Contabl</h1>
             </Link>
           </Button>
         </SheetHeader>

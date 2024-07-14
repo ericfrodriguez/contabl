@@ -10,6 +10,7 @@ import {
   BreadcrumbPage,
   BreadcrumbSeparator
 } from "@/components/ui/breadcrumb";
+import Image from "next/image";
 
 export default function DashboardPage() {
 
@@ -28,7 +29,15 @@ export default function DashboardPage() {
           </BreadcrumbItem>
         </BreadcrumbList>
       </Breadcrumb>
-      <PlaceholderContent />
+      <PlaceholderContent>
+        <Image
+          src="/placeholder4.svg"
+          alt="Placeholder Image"
+          width={500}
+          height={500}
+          priority
+        />
+      </PlaceholderContent>
     </ContentLayout>
   );
 }

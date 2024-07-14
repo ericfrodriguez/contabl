@@ -10,6 +10,7 @@ import {
   BreadcrumbPage,
   BreadcrumbSeparator
 } from "@/components/ui/breadcrumb";
+import Image from "next/image";
 
 export default function TagsPage() {
   return (
@@ -24,7 +25,7 @@ export default function TagsPage() {
           <BreadcrumbSeparator />
           <BreadcrumbItem>
             <BreadcrumbLink asChild>
-              <Link href="/dashboard">Dashboard</Link>
+              <Link href="/">Dashboard</Link>
             </BreadcrumbLink>
           </BreadcrumbItem>
           <BreadcrumbSeparator />
@@ -33,7 +34,15 @@ export default function TagsPage() {
           </BreadcrumbItem>
         </BreadcrumbList>
       </Breadcrumb>
-      <PlaceholderContent />
+      <PlaceholderContent>
+        <Image
+          src="/placeholder3.svg"
+          alt="Placeholder Image"
+          width={500}
+          height={500}
+          priority
+        />
+      </PlaceholderContent>
     </ContentLayout>
   );
 }

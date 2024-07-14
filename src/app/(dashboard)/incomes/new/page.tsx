@@ -10,10 +10,11 @@ import {
   BreadcrumbPage,
   BreadcrumbSeparator
 } from "@/components/ui/breadcrumb";
+import Image from "next/image";
 
-export default function PostsPage() {
+export default function NewIncomePage() {
   return (
-    <ContentLayout title="All Posts">
+    <ContentLayout title="New Income">
       <Breadcrumb>
         <BreadcrumbList>
           <BreadcrumbItem>
@@ -24,16 +25,30 @@ export default function PostsPage() {
           <BreadcrumbSeparator />
           <BreadcrumbItem>
             <BreadcrumbLink asChild>
-              <Link href="/dashboard">Dashboard</Link>
+              <Link href="/">Dashboard</Link>
             </BreadcrumbLink>
           </BreadcrumbItem>
           <BreadcrumbSeparator />
           <BreadcrumbItem>
-            <BreadcrumbPage>Posts</BreadcrumbPage>
+            <BreadcrumbLink asChild>
+              <Link href="/incomes">Incomes</Link>
+            </BreadcrumbLink>
+          </BreadcrumbItem>
+          <BreadcrumbSeparator />
+          <BreadcrumbItem>
+            <BreadcrumbPage>New</BreadcrumbPage>
           </BreadcrumbItem>
         </BreadcrumbList>
       </Breadcrumb>
-      <PlaceholderContent />
+      <PlaceholderContent>
+        <Image
+          src="/placeholder2.svg"
+          alt="Placeholder Image"
+          width={500}
+          height={500}
+          priority
+        />
+      </PlaceholderContent>
     </ContentLayout>
   );
 }

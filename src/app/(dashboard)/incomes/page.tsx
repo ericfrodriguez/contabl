@@ -11,9 +11,26 @@ import {
   BreadcrumbSeparator
 } from "@/components/ui/breadcrumb";
 
-export default function NewPostPage() {
+import { db } from "@/server/db";
+import { IncomesClient } from './components/client';
+import type { IncomeRow } from "./components/columns";
+
+export const dynamic = "force-dynamic";
+
+export default async function IncomesPage() {
+  const incomes: IncomeRow[] = await db.query.incomes.findMany({
+    columns: {
+      id: true,
+      description: true,
+      amount: true,
+      date: true,
+      recurrenceDate: true,
+      currency: true,
+    }
+  });
+
   return (
-    <ContentLayout title="New Post">
+    <ContentLayout title="All Incomes">
       <Breadcrumb>
         <BreadcrumbList>
           <BreadcrumbItem>
@@ -24,22 +41,18 @@ export default function NewPostPage() {
           <BreadcrumbSeparator />
           <BreadcrumbItem>
             <BreadcrumbLink asChild>
-              <Link href="/dashboard">Dashboard</Link>
+              <Link href="/">Dashboard</Link>
             </BreadcrumbLink>
           </BreadcrumbItem>
           <BreadcrumbSeparator />
           <BreadcrumbItem>
-            <BreadcrumbLink asChild>
-              <Link href="/posts">Posts</Link>
-            </BreadcrumbLink>
-          </BreadcrumbItem>
-          <BreadcrumbSeparator />
-          <BreadcrumbItem>
-            <BreadcrumbPage>New</BreadcrumbPage>
+            <BreadcrumbPage>Incomes</BreadcrumbPage>
           </BreadcrumbItem>
         </BreadcrumbList>
       </Breadcrumb>
-      <PlaceholderContent />
+      <PlaceholderContent>
+        <IncomesClient data={incomes} />
+      </PlaceholderContent>
     </ContentLayout>
   );
 }
