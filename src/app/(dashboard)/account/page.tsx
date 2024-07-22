@@ -36,7 +36,7 @@ export default function AccountPage() {
       </Breadcrumb>
       <PlaceholderContent>
         <Image
-          src="/placeholder.png"
+          src="/placeholder2.svg"
           alt="Placeholder Image"
           width={500}
           height={500}

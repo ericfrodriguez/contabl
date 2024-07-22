@@ -45,21 +45,22 @@ export function getMenuList(pathname: string): Group[] {
       groupLabel: "Contents",
       menus: [
         {
-          href: "",
+          // href: "",
+          href: "/incomes",
           label: "Incomes",
           active: pathname.includes("/incomes"),
           icon: SquarePen,
           submenus: [
-            {
-              href: "/incomes",
-              label: "All Incomes",
-              active: pathname === "/incomes"
-            },
-            {
-              href: "/incomes/new",
-              label: "New Income",
-              active: pathname === "/incomes/new"
-            }
+            // {
+            //   href: "/incomes",
+            //   label: "All Incomes",
+            //   active: pathname === "/incomes"
+            // },
+            // {
+            //   href: "/incomes/new",
+            //   label: "New Income",
+            //   active: pathname === "/incomes/new"
+            // }
           ]
         },
         {

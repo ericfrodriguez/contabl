@@ -1,11 +1,13 @@
 // Example model schema from the Drizzle docs
 // https://orm.drizzle.team/docs/sql-schema-declaration
 
+import { relations } from "drizzle-orm";
 import {
   boolean,
   date,
   decimal,
   index,
+  integer,
   pgEnum,
   pgTableCreator,
   serial,
@@ -48,6 +50,12 @@ export const incomes = createTable(
     nameIndex: index("name_idx").on(example.description),
   }),
 );
+export const incomesRelations = relations(incomes, ({ one }) => ({
+  user: one(users, {
+    fields: [incomes.userId],
+    references: [users.kindeId],
+  }),
+}));
 
 export const users = createTable("users", {
   id: serial("id").primaryKey(),
@@ -57,3 +65,6 @@ export const users = createTable("users", {
   email: varchar("email", { length: 128 }).notNull(),
   photo: text("photo"),
 });
+export const usersRelations = relations(users, ({ many }) => ({
+  incomes: many(incomes),
+}));

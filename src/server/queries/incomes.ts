@@ -4,11 +4,13 @@ import { db } from "@/server/db";
 import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
 
 export const getAllIncomes = async () => {
-  const { isAuthenticated } = getKindeServerSession();
-  const session = await isAuthenticated();
-  if (!session) throw new Error("Unauthorized");
+  const { getUser } = getKindeServerSession();
+  const user = await getUser();
+
+  if (!user) throw new Error("Unauthorized");
 
   const incomes: IncomeRow[] = await db.query.incomes.findMany({
+    where: (model, { eq }) => eq(model.userId, user.id),
     columns: {
       id: true,
       description: true,
