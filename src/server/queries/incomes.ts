@@ -4,20 +4,20 @@ import { db } from "@/server/db";
 import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
 
 export const getAllIncomes = async () => {
-  const { isAuthenticated, getUser } = getKindeServerSession();
+  const { isAuthenticated } = getKindeServerSession();
   const session = await isAuthenticated();
-    if (!session) throw new Error("Unauthorized");
+  if (!session) throw new Error("Unauthorized");
 
-    const incomes: IncomeRow[] = await db.query.incomes.findMany({
-      columns: {
-        id: true,
-        description: true,
-        amount: true,
-        date: true,
-        recurrenceDate: true,
-        currency: true,
-      },
-    });
+  const incomes: IncomeRow[] = await db.query.incomes.findMany({
+    columns: {
+      id: true,
+      description: true,
+      amount: true,
+      date: true,
+      recurrenceDate: true,
+      currency: true,
+    },
+  });
 
-    return incomes;
+  return incomes;
 };

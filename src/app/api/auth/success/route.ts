@@ -8,9 +8,7 @@ import { NextResponse } from "next/server";
 export async function GET() {
   const { getUser } = getKindeServerSession();
   const user = await getUser();
-  // const {orgCode} = await getOrganization();
 
-  // eslint-disable-next-line @typescript-eslint/prefer-optional-chain
   if (!user || user == null || !user.id)
     throw new Error("something went wrong with authentication");
 
@@ -29,5 +27,7 @@ export async function GET() {
     });
   }
 
-  return NextResponse.redirect(env.NEXT_PUBLIC_APP);
+  return NextResponse.redirect(env.NEXT_PUBLIC_APP_URL);
 }
+
+export const dynamic = "force-dynamic";

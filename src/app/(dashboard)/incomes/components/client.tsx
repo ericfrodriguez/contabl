@@ -10,9 +10,6 @@ interface IncomesClientProps {
 export const IncomesClient = ({ data }: IncomesClientProps) => {
   return (
     <>
-      <div>
-    
-      </div>
       <DataTable data={data} columns={columns} />
     </>
   )

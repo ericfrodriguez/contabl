@@ -11,15 +11,13 @@ import {
   BreadcrumbSeparator
 } from "@/components/ui/breadcrumb";
 
-import { db } from "@/server/db";
 import { IncomesClient } from './components/client';
-import type { IncomeRow } from "./components/columns";
 import { getAllIncomes } from "@/server/queries/incomes";
 
 export const dynamic = "force-dynamic";
 
 export default async function IncomesPage() {
-  const incomes = getAllIncomes();
+  const incomes = await getAllIncomes();
 
   return (
     <ContentLayout title="All Incomes">
