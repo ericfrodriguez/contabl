@@ -7,7 +7,6 @@ import {
   date,
   decimal,
   index,
-  integer,
   pgEnum,
   pgTableCreator,
   serial,
