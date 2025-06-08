@@ -46,9 +46,9 @@ export function getMenuList(pathname: string): Group[] {
       menus: [
         {
           // href: "",
-          href: "/incomes",
-          label: "Incomes",
-          active: pathname.includes("/incomes"),
+          href: "/transactions",
+          label: "Transactions",
+          active: pathname.includes("/transactions"),
           icon: SquarePen,
           submenus: [
             // {

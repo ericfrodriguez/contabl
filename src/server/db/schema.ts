@@ -24,34 +24,30 @@ import {
 export const createTable = pgTableCreator((name) => `contabl_${name}`);
 
 export const currencyEnum = pgEnum("currency", ["USD", "ARS"]);
-export const incomes = createTable(
-  "incomes",
-  {
-    id: serial("id").primaryKey(),
-    userId: varchar("user_id", { length: 256 }).notNull(),
-    description: varchar("description", { length: 256 }).notNull(),
-    amount: decimal("amount", { precision: 12, scale: 2 }).notNull(),
-    currency: currencyEnum("currency").notNull().default("ARS"),
-    // arsAtDate: ,
-    // usdAtDate: ,
-    // state: "received" | "not received",
-    date: timestamp("date", { withTimezone: true }).defaultNow(), // TODO: Ver diferencia entre timezone base de datos y cliente
-    isRecurring: boolean("is_recurring").notNull().default(false),
-    recurrenceDate: date("recurrence_date", { mode: "string" }),
-    createdAt: timestamp("created_at", { withTimezone: true })
-      .notNull()
-      .defaultNow(),
-    updatedAt: timestamp("updated_at", { withTimezone: true }).$onUpdate(
-      () => new Date(),
-    ),
-  },
-  (example) => ({
-    nameIndex: index("name_idx").on(example.description),
-  }),
-);
-export const incomesRelations = relations(incomes, ({ one }) => ({
+export const typeEnum = pgEnum("type", ["income", "expense"]);
+export const transactions = createTable("transactions", {
+  id: serial("id").primaryKey(),
+  userId: varchar("user_id", { length: 256 }).notNull(),
+  description: varchar("description", { length: 256 }).notNull(),
+  amount: decimal("amount", { precision: 12, scale: 2 }).notNull(),
+  currency: currencyEnum("currency").notNull().default("ARS"),
+  // arsAtDate: ,
+  // usdAtDate: ,
+  // state: "received" | "not received",
+  date: timestamp("date", { withTimezone: true }).defaultNow(), // TODO: Ver diferencia entre timezone base de datos y cliente,
+  type: typeEnum("type").notNull().default("expense"),
+  isRecurring: boolean("is_recurring").notNull().default(false),
+  recurrenceDate: date("recurrence_date", { mode: "string" }),
+  createdAt: timestamp("created_at", { withTimezone: true })
+    .notNull()
+    .defaultNow(),
+  updatedAt: timestamp("updated_at", { withTimezone: true }).$onUpdate(
+    () => new Date(),
+  ),
+});
+export const transactionsRelations = relations(transactions, ({ one }) => ({
   user: one(users, {
-    fields: [incomes.userId],
+    fields: [transactions.userId],
     references: [users.kindeId],
   }),
 }));
@@ -65,5 +61,5 @@ export const users = createTable("users", {
   photo: text("photo"),
 });
 export const usersRelations = relations(users, ({ many }) => ({
-  incomes: many(incomes),
+  transactions: many(transactions),
 }));

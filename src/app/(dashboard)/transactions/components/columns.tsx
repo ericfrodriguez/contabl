@@ -1,20 +1,21 @@
 "use client"
 
-import { getFormattedAmount, getFormattedDate } from "@/lib/utils";
+import { cn, getFormattedAmount, getFormattedDate } from "@/lib/utils";
 import type { ColumnDef } from "@tanstack/react-table"
 
 // This type is used to define the shape of our data.
 // You can use a Zod schema here if you want.
-export type IncomeRow = {
+export type TransactionRow = {
   id: number;
   description: string;
   amount: string;
   date: Date | null;
   currency: string;
   recurrenceDate: string | null;
+  type: string;
 }
 
-export const columns: ColumnDef<IncomeRow>[] = [
+export const columns: ColumnDef<TransactionRow>[] = [
   {
     accessorKey: "description",
     header: "Description",
@@ -26,7 +27,7 @@ export const columns: ColumnDef<IncomeRow>[] = [
   {
     accessorKey: "amount",
     header: () => <div className="text-right">Amount</div>,
-    cell: ({ row }) => <div className="text-right font-medium">{getFormattedAmount(row.getValue('amount'), row.original.currency)}</div>,
+    cell: ({ row }) => <div className={cn("text-right font-medium", { "text-positive": row.original.type === "income" })}>{getFormattedAmount(row.getValue('amount'), row.original.currency, row.original.type)}</div>,
   },
   {
     accessorKey: "date",

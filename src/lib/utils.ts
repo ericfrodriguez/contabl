@@ -20,8 +20,8 @@ export const getFormattedDate = (date: string | null): string | null => {
   return null;
 };
 
-export const getFormattedAmount = (amount: string, currency = "ARS") => {
-  const amountFloat = parseFloat(amount);
+export const getFormattedAmount = (amount: string, currency = "ARS", type: string) => {
+  const amountFloat = parseFloat(type === "expense" ? `-${amount}` : amount);
   let formatted: string;
 
   switch (currency) {
@@ -46,5 +46,5 @@ export const getFormattedAmount = (amount: string, currency = "ARS") => {
       break;
   }
 
-  return formatted;
+  return type === "income" ? `+${formatted}` : formatted;
 };
